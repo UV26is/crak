@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.javaclimb.music.dao.UserRoleMapper">
+    <resultMap type="com.javaclimb.music.domain.UserRole" id="UserRole">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, role_name, create_time, update_time
+    </sql>
+
+    <insert id="insert" parameterType="com.javaclimb.music.domain.UserRole">
+        insert into user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="roleName != null">
+                #{roleName},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.javaclimb.music.domain.UserRole">
+        update user_role
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="roleName != null">
+                role_name = #{roleName},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from user_role where id = #{id}
+    </delete>
+
+    <select id="selectByPrimaryKey" resultMap="UserRole" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_role
+        where id = #{id}
+    </select>
+
+    <select id="allUserRole" resultMap="UserRole">
+        select
+        <include refid="Base_Column_List"/>
+        from user_role
+    </select>
+
+    <select id="selectByUserId" resultMap="UserRole" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user_role
+        where user_id = #{userId}
+    </select>
+</mapper> 
